@@ -1,0 +1,58 @@
+#ifndef __IMAGE_H__
+#define __IMAGE_H__
+
+class Image
+{
+public:
+	// Creates a Image with the specified dimensions
+	Image(const unsigned int w, const unsigned int h);
+	//Reads a Image from a directory
+	Image(const char* dir);
+
+	~Image();
+
+	// Getters
+	double** getImage() const;
+	unsigned int const getWidth() const;
+	unsigned int const getHeigth() const;
+	unsigned int const getSize();
+
+	// Sets a especified value on a position of the image
+	void setValue(const double value, const unsigned int i , const unsigned int j);
+	// Adds a value to a element
+	void addValue(const double value, const unsigned int i, const unsigned int j);
+	// Adds a value to all elements
+	void addAllValue(const double value);
+	// Saves the difference between images 
+	void diffImages(Image &img);
+
+	// Reads image .pgm from directory
+	void readImagePGM(const char* dir);
+	// Reads image from directory
+	void readImage(const char* dir);
+	// Exports image to disk as a .pgm file
+	void exportImagePGM(const char* path);
+	// Exports image to disk
+	void exportImage(const char* path);
+
+	// Calculate error between two images
+	const double compare_ECM(const Image &img) const;
+	const double compare_PSNR(const Image &img) const; // Good images 30-50db
+	const double compare_SSIM(const Image &img) const;
+
+
+protected:
+	// Allocates space for the image
+	void initializeImage();
+	// Ensures that a value doesnt get out of range
+	double clip(const double v,const double min,const double max);
+
+protected:
+
+	double **image_;
+	unsigned int width_;
+	unsigned int height_;
+	unsigned int size_;
+};
+
+#endif
